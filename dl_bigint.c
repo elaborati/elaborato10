@@ -61,13 +61,7 @@ static int utilityForCarry(bigint** n, digit x) {
 	return 1;
 }
 
-static digit digitProd(digit a, digit b) {
-    return (a * b) % 10;
-}
 
-static digit digitCarry(digit a, digit b) {
-    return (a * b) / 10;
-}
 
 bigint *mul(bigint *N1, bigint *N2) {
     bigint* res = bigint_alloc(0);
@@ -75,8 +69,8 @@ bigint *mul(bigint *N1, bigint *N2) {
     bigint* tail2 = getTail(N2);
     bigint* tailRes = getTail(res);
 
-	for(N1 = tail1; N1 != NULL; N1 = N1->prev) {
-		for(N2 = tail2; N2 != NULL; N2 = N2->prev) {
+	for(N1 = tail1; N1 != NULL; N1 = N1->prev, tailRes = tailRes->prev) {
+		for(N2 = tail2, res = tailRes; N2 != NULL; N2 = N2->prev) {
             digit product = (N1->x) * (N2->x);
             digit actualDigit = product % 10;
             if(res == NULL)
@@ -88,6 +82,7 @@ bigint *mul(bigint *N1, bigint *N2) {
             res->x %= 10;
 			utilityForCarry(&res, carry);
         }
+
     }
     return res;
 }

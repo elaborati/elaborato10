@@ -134,15 +134,27 @@ bigint *mul(bigint *N1, bigint *N2) {
 	digit sign = computeSign(N1, N2);
 	absInPlace(N1);
 	absInPlace(N2);
-	for(N1 = tail1; N1 != NULL; N1 = N1->prev, tailRes = tailRes->prev) {
-		for(N2 = tail2, res = tailRes; N2 != NULL; N2 = N2->prev) {
-            digit product = (N1->x) * (N2->x);
-            (res->x) += product;
+
+
+	N1 = tail1;
+	do {
+
+		N2 = tail2;
+		res = tailRes;
+		do {
+			digit product = (N1->x) * (N2->x);
+			(res->x) += product;
 			digit carry = res->x / 10;
-            res->x %= 10;
+			res->x %= 10;
 			utilityForCarry(&res, carry);
-        }
-    }
+
+			N2 = N2->prev;
+		} while(N2 != NULL);
+
+		N1 = N1->prev;
+		tailRes = tailRes->prev;
+	} while(N1 != NULL);
+
 	remove_leading_zeros(&res);
 	res->x *= sign;
     return res;

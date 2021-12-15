@@ -17,12 +17,13 @@ void print(bigint *N) {
 }
 
 int main() {
-    int n1int[] = {3, 2, 1};
-    int n2int[] = {3, 2, 1};
-    bigint* n1 = str2bigint_rec("4367376");
+
+    bigint* n1 = str2bigint_rec("1234");
+	n1->x *= -1;
 	print(n1);
 	printf("\n");
     bigint* n2 = str2bigint_rec("76763");
+	n2->x *= -1;
 	print(n2);
     bigint* n3 = mul(n1,n2);
     int x = (-2) % 10;

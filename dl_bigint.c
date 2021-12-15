@@ -83,6 +83,7 @@ static bigint* getTail(bigint* N) {
     return node;
 }
 
+
 static int utilityForCarry(bigint** n, digit x) {
 	if((*n)->prev == NULL) {
 		return head_insert(n, x);

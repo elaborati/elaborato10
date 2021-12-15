@@ -12,4 +12,6 @@ typedef struct bigint {
 
 bigint *mul(bigint *N1, bigint *N2);
 
+bigint *str2bigint_rec(char *s);
+
 #endif

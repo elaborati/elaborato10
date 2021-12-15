@@ -1,4 +1,4 @@
-#define DL_BIGINT /* TODO: DA RIMUOVERE AL MOMENTO DELLA CONSEGNA */
+//#define DL_BIGINT /* TODO: DA RIMUOVERE AL MOMENTO DELLA CONSEGNA */
 #ifdef DL_BIGINT
 #include <stdlib.h>
 #include "dl_bigint.h"

@@ -91,16 +91,16 @@ bigint *str2bigint_rec(char *s) {
 }
 
 static bigint* getTail(bigint* N) {
-    bigint* node = N;
-    while (node->next != NULL) {
-        node = node->next;
-    }
-    return node;
+    return N->prev;
+}
+
+static bigint* getHead(bigint* N) {
+	return N;
 }
 
 
-static int utilityForCarry(bigint** n, digit x) {
-	if((*n)->prev == NULL) {
+static int utilityForCarry(bigint** n, digit x, bigint* tail) {
+	if((*n)->prev == tail) {
 		return head_insert(n, x);
 	}
 	(*n) = (*n)->prev;
@@ -123,9 +123,10 @@ static digit computeSign(bigint* n1, bigint* n2) {
 static int wellFormedBigint(bigint* n) {
 	if (n->x > 9 || n->x < -9)
 		return 0;
-	n = n->next;
-	for(; n != NULL; n = n->next)
-		if(n->x > 9 || n->x < 0)
+	bigint* _n = n->next;
+
+	for(; _n != n; _n = _n->next)
+		if(_n->x > 9 || _n->x < 0)
 			return 0;
 	return 1;
 }
@@ -139,6 +140,7 @@ bigint *mul(bigint *N1, bigint *N2) {
     bigint* res = bigint_alloc(0);
     bigint* tail1 = getTail(N1);
     bigint* tail2 = getTail(N2);
+	bigint* _tailRes = getTail(res);
     bigint* tailRes = getTail(res);
 	digit sign = computeSign(N1, N2);
 	absInPlace(N1);
@@ -155,14 +157,14 @@ bigint *mul(bigint *N1, bigint *N2) {
 			(res->x) += product;
 			digit carry = res->x / 10;
 			res->x %= 10;
-			utilityForCarry(&res, carry);
+			utilityForCarry(&res, carry, _tailRes);
 
 			N2 = N2->prev;
-		} while(N2 != NULL);
+		} while(N2 != tail2);
 
 		N1 = N1->prev;
 		tailRes = tailRes->prev;
-	} while(N1 != NULL);
+	} while(N1 != tail1);
 
 	remove_leading_zeros(&res);
 	res->x *= sign;

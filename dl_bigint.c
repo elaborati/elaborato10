@@ -84,7 +84,7 @@ static bigint* getTail(bigint* N) {
 }
 
 
-static int utilityForCarry(bigint** n, digit x) {
+static int moveHead(bigint** n, digit x) {
 	if((*n)->prev == NULL) {
 		return head_insert(n, x);
 	}
@@ -147,7 +147,7 @@ bigint *mul(bigint *N1, bigint *N2) {
 			(res->x) += product;
 			digit carry = res->x / 10;
 			res->x %= 10;
-			utilityForCarry(&res, carry);
+			moveHead(&res, carry);
 
 			N2 = N2->prev;
 		} while(N2 != NULL);

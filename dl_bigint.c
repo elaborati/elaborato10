@@ -1,4 +1,5 @@
-//#define DL_BIGINT /* TODO: DA RIMUOVERE AL MOMENTO DELLA CONSEGNA */
+#include "selector.h"
+
 #ifdef DL_BIGINT
 #include <stdlib.h>
 #include "dl_bigint.h"
@@ -160,7 +161,6 @@ bigint *mul(bigint *N1, bigint *N2) {
 	res->x *= sign;
     return res;
 }
-
 
 
 #endif

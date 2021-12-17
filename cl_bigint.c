@@ -1,8 +1,8 @@
-#define CL_BIGINT /* TODO: DA RIMUOVERE AL MOMENTO DELLA CONSEGNA */
+#include "selector.h"
 #ifdef CL_BIGINT
+
 #include <stdlib.h>
 #include "dl_bigint.h"
-#include <stdlib.h>
 
 static void absInPlace(bigint* n);
 static digit computeSign(bigint* n1, bigint* n2);
@@ -170,6 +170,7 @@ bigint *mul(bigint *N1, bigint *N2) {
 	res->x *= sign;
     return res;
 }
+
 
 
 
